@@ -1,24 +1,27 @@
-export function printOwing(invoice) {
-  let outstanding = 0;
+//함수 추출하기
+export function printOwing(invoice, console, clock) {
+  printBanner(console);
+  const outstanding = calculateOutstanding(invoice.orders);
+  recordDueDate(clock, invoice);
+  printDetails(invoice, outstanding, console);
+}
 
+function printBanner(console) {
   console.log('***********************');
   console.log('**** Customer Owes ****');
   console.log('***********************');
+}
 
-  // calculate outstanding
-  for (const o of invoice.orders) {
-    outstanding += o.amount;
-  }
+function calculateOutstanding(orders) {
+  return orders.reduce((acc, order) => (acc += order.amount), 0);
+}
 
-  // record due date
-  const today = new Date();
-  invoice.dueDate = new Date(
-    today.getFullYear(),
-    today.getMonth(),
-    today.getDate() + 30
-  );
+function recordDueDate(clock, invoice) {
+  const today = clock.today;
+  invoice.dueDate = new Date(today.getFullYear(), today.getMonth(), today.getDate() + 30);
+}
 
-  //print details
+function printDetails(invoice, outstanding, console) {
   console.log(`name: ${invoice.customer}`);
   console.log(`amount: ${outstanding}`);
   console.log(`due: ${invoice.dueDate.toLocaleDateString()}`);
@@ -28,4 +31,10 @@ const invoice = {
   orders: [{ amount: 2 }, { amount: 5 }],
   customer: '엘리',
 };
-printOwing(invoice);
+class Clock {
+  constructor() {}
+  get today() {
+    return new Date();
+  }
+}
+printOwing(invoice, console, new Clock());
