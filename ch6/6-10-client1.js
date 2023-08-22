@@ -1,6 +1,7 @@
-import { acquireReading, baseRate } from './6-10.js';
+//여러 함수를 변환 함수로 묶기
+import { acquireReading, enrichReading } from './6-10.js';
 
-const aReading = acquireReading();
-
-const baseCharge = baseRate(aReading.month, aReading.year) * aReading.quantity;
-console.log(baseCharge);
+const rawReading = acquireReading();
+const reading = enrichReading(rawReading);
+console.log(reading.baseCharge);
+console.log(reading.taxableCharge);
