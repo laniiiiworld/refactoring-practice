@@ -1,9 +1,6 @@
-import { acquireReading, baseRate } from './6-9.js';
+//여러 함수를 클래스로 묶기
+import { acquireReading } from './6-9.js';
 
-const aReading = acquireReading();
-
-function calculateBaseCharge(aReading) {
-  return baseRate(aReading.month, aReading.year) * aReading.quantity;
-}
-
-const basicChargeAmount = calculateBaseCharge(aReading);
+const reading = acquireReading();
+const basicChargeAmount = reading.baseCharge;
+console.log(basicChargeAmount);

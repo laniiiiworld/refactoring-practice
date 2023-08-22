@@ -1,10 +1,6 @@
-import { acquireReading, baseRate } from './6-9.js';
+//여러 함수를 클래스로 묶기
+import { acquireReading } from './6-9.js';
 
-const aReading = acquireReading();
-const base = baseRate(aReading.month, aReading.year) * aReading.quantity;
-
-function taxThreshold(year) {
-  return 0.1;
-}
-
-export const taxableCharge = Math.max(0, base - taxThreshold(aReading.year));
+const reading = acquireReading();
+const taxableCharge = reading.taxableCharge;
+console.log(taxableCharge);
