@@ -1,16 +1,24 @@
+//단계 쪼개기 챌린지 1
 export function priceOrder(product, quantity, shippingMethod) {
-  const basePrice = product.basePrice * quantity;
-  const discount =
-    Math.max(quantity - product.discountThreshold, 0) *
-    product.basePrice *
-    product.discountRate;
-  const shippingPerCase =
-    basePrice > shippingMethod.discountThreshold
-      ? shippingMethod.discountedFee
-      : shippingMethod.feePerCase;
-  const shippingCost = quantity * shippingPerCase;
-  const price = basePrice - discount + shippingCost;
-  return price;
+  const basePrice = calculateBasePrice(product, quantity);
+  const discount = calculateDiscountedPrice(product, quantity);
+  const shippingCost = calculateShippingCost(basePrice, shippingMethod, quantity);
+  return basePrice - discount + shippingCost;
+}
+
+function calculateBasePrice(product, quantity) {
+  return product.basePrice * quantity;
+}
+
+function calculateDiscountedPrice(product, quantity) {
+  const { discountThreshold, basePrice, discountRate } = product;
+  return Math.max(quantity - discountThreshold, 0) * basePrice * discountRate;
+}
+
+function calculateShippingCost(basePrice, shippingMethod, quantity) {
+  const { discountThreshold, discountedFee, feePerCase } = shippingMethod;
+  const shippingPerCase = basePrice > discountThreshold ? discountedFee : feePerCase;
+  return quantity * shippingPerCase;
 }
 
 // 사용 예:
