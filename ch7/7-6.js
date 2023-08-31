@@ -1,4 +1,5 @@
-export class TrackingInformation {
+//클래스 인라인하기
+export class Shipment {
   #shippingCompany;
   #trackingNumber;
   constructor(trackingNumber, shippingCompany) {
@@ -22,32 +23,13 @@ export class TrackingInformation {
     this.#trackingNumber = arg;
   }
 
-  get display() {
+  get trackingInfo() {
     return `${this.shippingCompany}: ${this.trackingNumber}`;
   }
 }
 
-export class Shipment {
-  #trackingInformation;
-  constructor(trackingInformation) {
-    this.#trackingInformation = trackingInformation;
-  }
-
-  get trackingInfo() {
-    return this.#trackingInformation.display;
-  }
-
-  get trackingInformation() {
-    return this.#trackingInformation;
-  }
-
-  set trackingInformation(trackingInformation) {
-    this.#trackingInformation = trackingInformation;
-  }
-}
-
-const shipment = new Shipment(new TrackingInformation(999, 'Maersk'));
+const shipment = new Shipment(999, 'Maersk');
 console.log(shipment.trackingInfo);
 
-shipment.trackingInformation.shippingCompany = 'COSCO';
+shipment.shippingCompany = 'COSCO';
 console.log(shipment.trackingInfo);
